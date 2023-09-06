@@ -250,7 +250,7 @@ static int gm_tx_hook(CANPacket_t *to_send) {
       bool allowed_btn = (button == GM_BTN_CANCEL);
       allowed_btn |= (button == GM_BTN_SET || button == GM_BTN_RESUME || button == GM_BTN_UNPRESS);
       if (!allowed_btn) {
-          tx = 0;
+          //tx = 0;
       }
   }
   else if ((addr == 481) && (gm_pcm_cruise || gas_interceptor_detected || gm_cc_long)) {
