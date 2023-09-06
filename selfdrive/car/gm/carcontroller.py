@@ -42,7 +42,7 @@ class CarController:
     self.packer_obj = CANPacker(DBC[self.CP.carFingerprint]['radar'])
     self.packer_ch = CANPacker(DBC[self.CP.carFingerprint]['chassis'])
 
-    self.button_state = 0
+    self.button_state = CruiseButtons.UNPRESS
 
   def update(self, CC, CS, now_nanos):
     actuators = CC.actuators
