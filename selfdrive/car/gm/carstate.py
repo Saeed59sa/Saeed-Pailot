@@ -166,7 +166,7 @@ class CarState(CarStateBase):
     # TODO: APILOT
     #Engine Rpm
     self.engineRPM = pt_cp.vl["ECMEngineStatus"]["EngineRPM"]
-    #ret.accFaulted = False # 벌트는 accFault를 체크하지 않는 걸로...
+    ret.accFaulted = False # 벌트는 accFault를 체크하지 않는 걸로...
 
     # brakeLight
     ret.brakeLights = chassis_cp.vl["EBCMFrictionBrakeStatus"]["FrictionBrakePressure"] != 0 or ret.brakePressed
