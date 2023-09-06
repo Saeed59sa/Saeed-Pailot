@@ -42,6 +42,8 @@ class CarController:
     self.packer_obj = CANPacker(DBC[self.CP.carFingerprint]['radar'])
     self.packer_ch = CANPacker(DBC[self.CP.carFingerprint]['chassis'])
 
+    self.button_state = 0
+
   def update(self, CC, CS, now_nanos):
     actuators = CC.actuators
     hud_control = CC.hudControl
@@ -127,7 +129,12 @@ class CarController:
         if actuators.longControlState in [LongCtrlState.starting]:
           if (self.frame - self.last_button_frame) * DT_CTRL > 0.1:
             self.last_button_frame = self.frame
-            can_sends.append(gmcan.create_buttons(self.packer_pt, CanBus.POWERTRAIN, (CS.buttons_counter + 1) % 4, CruiseButtons.RES_ACCEL))
+            self.button_state = CruiseButtons.UNPRESS if self.button_state == CruiseButtons.RES_ACCEL else CruiseButtons.UNPRESS
+            can_sends.append(gmcan.create_buttons(self.packer_pt, CanBus.POWERTRAIN, (CS.buttons_counter + 1) % 4, self.button_state))
+        else:
+          if self.button_state == CruiseButtons.RES_ACCEL:
+            can_sends.append(gmcan.create_buttons(self.packer_pt, CanBus.POWERTRAIN, (CS.buttons_counter + 1) % 4, CruiseButtons.UNPRESS))
+          self.button_state = CruiseButtons.UNPRESS
 
         idx = (self.frame // 4) % 4
 
