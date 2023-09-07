@@ -44,6 +44,7 @@ class CarState(CarStateBase):
     self.distance_button_pressed = False
 
     self.totalDistance = 0.0
+    self.accFaultedCount = 0
 
   def update(self, pt_cp, cam_cp, loopback_cp, chassis_cp): # brakeLights
     ret = car.CarState.new_message()
